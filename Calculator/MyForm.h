@@ -38,7 +38,6 @@ namespace Calculator {
 	private: double num1 = 0;
 	private: char op;
 	private: System::Windows::Forms::Label^ labOutput;
-	private: double dblOutput;
 	private: bool isEndOperation = true;
 
 
@@ -475,48 +474,44 @@ namespace Calculator {
 		else {
 			this->labOutput->Text = this->labOutput->Text + btn->Text;
 		}
-		saveOutputValue();
-	}
-
-	private: System::Void saveOutputValue() {
-		this->dblOutput = System::Convert::ToDouble(this->labOutput->Text);
 	}
 
 	private: System::Void BtnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->op = '+';
-		this->num1 = num1 + dblOutput;
-		this->labOutput->Text = System::Convert::ToString(num1);
+		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+		this->labOutput->Text = "0";
 		this->isEndOperation = true;
 	}
 
 	private: System::Void BtnMin_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->op = '-';
-		this->num1 = num1 - dblOutput;
-		this->labOutput->Text = System::Convert::ToString(num1);
+		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+		this->labOutput->Text = "0";
 		this->isEndOperation = true;
 	}
 
 	private: System::Void BtnMult_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->op = '*';
-		this->num1 = dblOutput * num1;
-		this->labOutput->Text = System::Convert::ToString(num1);
+		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+		this->labOutput->Text = "0";
 		this->isEndOperation = true;
 	}
 
 	private: System::Void BtnDiv_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->op = '/';
-		this->num1 = dblOutput;
-		this->labOutput->Text = System::Convert::ToString(num1);
+		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+		this->labOutput->Text = "0";
+		this->isEndOperation = true;
 	}
 
 	private: System::Void Btn2_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->op = '^';
-		this->num1 = dblOutput;
+		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
 	}
 
 	private: System::Void BtnSqrt_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->op = 's';
-		this->num1 = dblOutput;
+		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
 	}
 
 	private: System::Void BtnResult_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -564,7 +559,6 @@ private: System::Void BtnDel_Click(System::Object^ sender, System::EventArgs^ e)
 	this->op = 0;
 	this->num1 = 0;
 	this->labOutput->Text = "0";
-	this->dblOutput = 0;
 	this->isEndOperation = true;
 }
 private: System::Void BtnBack_Click(System::Object^ sender, System::EventArgs^ e) {
