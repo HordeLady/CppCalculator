@@ -23,5 +23,13 @@
     <ClInclude Include="MyForm.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="CalculatorService.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CalculatorService.cpp">
+      <Filter>Исходные файлы</Filter>
+    </None>
   </ItemGroup>
 </Project>

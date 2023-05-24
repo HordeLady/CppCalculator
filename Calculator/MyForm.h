@@ -10,11 +10,15 @@ namespace Calculator {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	enum STATUS { START, WORK, END };
+	enum ACTION { ADD, MINUS, MULTIPLY, DIVIDE, SQUARE_ROOT, SQUARE, EQUALS, CLEAR };
+
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+
 	public:
 		MyForm(void)
 		{
@@ -35,42 +39,39 @@ namespace Calculator {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Button^ btnNum0;
+	private: System::Windows::Forms::Button^ btnNum1;
+	private: System::Windows::Forms::Button^ btnNum2;
+	private: System::Windows::Forms::Button^ btnNum3;
+	private: System::Windows::Forms::Button^ btnNum4;
+	private: System::Windows::Forms::Button^ btnNum5;
+	private: System::Windows::Forms::Button^ btnNum6;
+	private: System::Windows::Forms::Button^ btnNum7;
+	private: System::Windows::Forms::Button^ btnNum8;
+	private: System::Windows::Forms::Button^ btnNum9;
+
+	private: System::Windows::Forms::Button^ btnClear;
+	private: System::Windows::Forms::Button^ btnSqrtRoot;
+	private: System::Windows::Forms::Button^ btn2;
+	private: System::Windows::Forms::Button^ btnAdd;
+	private: System::Windows::Forms::Button^ btnMin;
+	private: System::Windows::Forms::Button^ btnMult;
+	private: System::Windows::Forms::Button^ btnDiv;
+	private: System::Windows::Forms::Button^ btnResult;
+
+	private: System::Windows::Forms::Button^ btnDelimiter;
+	private: System::Windows::Forms::Button^ btnSignChange;
+
 	private: double num1 = 0;
 	private: char op;
 	private: System::Windows::Forms::Label^ labOutput;
 	private: bool isEndOperation = true;
 
-
-	private: System::Windows::Forms::Button^ btnDel;
-
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::Button^ btnDouble;
-
-	private: System::Windows::Forms::Button^ button6;
-	private: System::Windows::Forms::Button^ button7;
-	private: System::Windows::Forms::Button^ button8;
-	private: System::Windows::Forms::Button^ btnResult;
-
-	private: System::Windows::Forms::Button^ btnMin;
-	private: System::Windows::Forms::Button^ btnBack;
-
-
-	private: System::Windows::Forms::Button^ button14;
-	private: System::Windows::Forms::Button^ button15;
-	private: System::Windows::Forms::Button^ button16;
-	private: System::Windows::Forms::Button^ button17;
-	private: System::Windows::Forms::Button^ btnAdd;
-	private: System::Windows::Forms::Button^ btnDiv;
-
-
-	private: System::Windows::Forms::Button^ btnMult;
-	private: System::Windows::Forms::Button^ btn2;
-	private: System::Windows::Forms::Button^ btnSqrt;
-
-
-
+	private: STATUS status = START;
+	private: ACTION action = CLEAR;
+	private: double argument1;
+	private: double argument2;
+	private: double argumentResult;
 
 	protected:
 
@@ -89,26 +90,26 @@ namespace Calculator {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->labOutput = (gcnew System::Windows::Forms::Label());
-			this->btnDel = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->btnDouble = (gcnew System::Windows::Forms::Button());
-			this->button6 = (gcnew System::Windows::Forms::Button());
-			this->button7 = (gcnew System::Windows::Forms::Button());
-			this->button8 = (gcnew System::Windows::Forms::Button());
+			this->btnClear = (gcnew System::Windows::Forms::Button());
+			this->btnNum5 = (gcnew System::Windows::Forms::Button());
+			this->btnNum2 = (gcnew System::Windows::Forms::Button());
+			this->btnNum8 = (gcnew System::Windows::Forms::Button());
+			this->btnDelimiter = (gcnew System::Windows::Forms::Button());
+			this->btnNum1 = (gcnew System::Windows::Forms::Button());
+			this->btnNum4 = (gcnew System::Windows::Forms::Button());
+			this->btnNum7 = (gcnew System::Windows::Forms::Button());
 			this->btnResult = (gcnew System::Windows::Forms::Button());
 			this->btnMin = (gcnew System::Windows::Forms::Button());
-			this->btnBack = (gcnew System::Windows::Forms::Button());
-			this->button14 = (gcnew System::Windows::Forms::Button());
-			this->button15 = (gcnew System::Windows::Forms::Button());
-			this->button16 = (gcnew System::Windows::Forms::Button());
-			this->button17 = (gcnew System::Windows::Forms::Button());
+			this->btnSignChange = (gcnew System::Windows::Forms::Button());
+			this->btnNum3 = (gcnew System::Windows::Forms::Button());
+			this->btnNum6 = (gcnew System::Windows::Forms::Button());
+			this->btnNum9 = (gcnew System::Windows::Forms::Button());
+			this->btnNum0 = (gcnew System::Windows::Forms::Button());
 			this->btnAdd = (gcnew System::Windows::Forms::Button());
 			this->btnDiv = (gcnew System::Windows::Forms::Button());
 			this->btnMult = (gcnew System::Windows::Forms::Button());
 			this->btn2 = (gcnew System::Windows::Forms::Button());
-			this->btnSqrt = (gcnew System::Windows::Forms::Button());
+			this->btnSqrtRoot = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// labOutput
@@ -124,125 +125,125 @@ namespace Calculator {
 			this->labOutput->Text = L"0";
 			this->labOutput->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
-			// btnDel
+			// btnClear
 			// 
-			this->btnDel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(231)), static_cast<System::Int32>(static_cast<System::Byte>(206)),
+			this->btnClear->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(231)), static_cast<System::Int32>(static_cast<System::Byte>(206)),
 				static_cast<System::Int32>(static_cast<System::Byte>(253)));
-			this->btnDel->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnDel->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnClear->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnClear->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->btnDel->Location = System::Drawing::Point(33, 136);
-			this->btnDel->Name = L"btnDel";
-			this->btnDel->Size = System::Drawing::Size(63, 64);
-			this->btnDel->TabIndex = 4;
-			this->btnDel->Text = L"AC";
-			this->btnDel->UseVisualStyleBackColor = false;
-			this->btnDel->Click += gcnew System::EventHandler(this, &MyForm::BtnDel_Click);
+			this->btnClear->Location = System::Drawing::Point(33, 136);
+			this->btnClear->Name = L"btnClear";
+			this->btnClear->Size = System::Drawing::Size(63, 64);
+			this->btnClear->TabIndex = 4;
+			this->btnClear->Text = L"AC";
+			this->btnClear->UseVisualStyleBackColor = false;
+			this->btnClear->Click += gcnew System::EventHandler(this, &MyForm::BtnDel_Click);
 			// 
-			// button2
+			// btnNum5
 			// 
-			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum5->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button2->Location = System::Drawing::Point(102, 276);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(63, 64);
-			this->button2->TabIndex = 5;
-			this->button2->Text = L"5";
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum5->Location = System::Drawing::Point(102, 276);
+			this->btnNum5->Name = L"btnNum5";
+			this->btnNum5->Size = System::Drawing::Size(63, 64);
+			this->btnNum5->TabIndex = 5;
+			this->btnNum5->Text = L"5";
+			this->btnNum5->UseVisualStyleBackColor = false;
+			this->btnNum5->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button3
+			// btnNum2
 			// 
-			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button3->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button3->Location = System::Drawing::Point(102, 346);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(63, 64);
-			this->button3->TabIndex = 6;
-			this->button3->Text = L"2";
-			this->button3->UseVisualStyleBackColor = false;
-			this->button3->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum2->Location = System::Drawing::Point(102, 346);
+			this->btnNum2->Name = L"btnNum2";
+			this->btnNum2->Size = System::Drawing::Size(63, 64);
+			this->btnNum2->TabIndex = 6;
+			this->btnNum2->Text = L"2";
+			this->btnNum2->UseVisualStyleBackColor = false;
+			this->btnNum2->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button4
+			// btnNum8
 			// 
-			this->button4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum8->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button4->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum8->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button4->Location = System::Drawing::Point(102, 206);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(63, 64);
-			this->button4->TabIndex = 7;
-			this->button4->Text = L"8";
-			this->button4->UseVisualStyleBackColor = false;
-			this->button4->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum8->Location = System::Drawing::Point(102, 206);
+			this->btnNum8->Name = L"btnNum8";
+			this->btnNum8->Size = System::Drawing::Size(63, 64);
+			this->btnNum8->TabIndex = 7;
+			this->btnNum8->Text = L"8";
+			this->btnNum8->UseVisualStyleBackColor = false;
+			this->btnNum8->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// btnDouble
+			// btnDelimiter
 			// 
-			this->btnDouble->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnDelimiter->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->btnDouble->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnDouble->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnDelimiter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnDelimiter->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->btnDouble->Location = System::Drawing::Point(174, 416);
-			this->btnDouble->Name = L"btnDouble";
-			this->btnDouble->Size = System::Drawing::Size(63, 64);
-			this->btnDouble->TabIndex = 8;
-			this->btnDouble->Text = L",";
-			this->btnDouble->UseVisualStyleBackColor = false;
-			this->btnDouble->Click += gcnew System::EventHandler(this, &MyForm::BtnDouble_Click);
+			this->btnDelimiter->Location = System::Drawing::Point(174, 416);
+			this->btnDelimiter->Name = L"btnDelimiter";
+			this->btnDelimiter->Size = System::Drawing::Size(63, 64);
+			this->btnDelimiter->TabIndex = 8;
+			this->btnDelimiter->Text = L",";
+			this->btnDelimiter->UseVisualStyleBackColor = false;
+			this->btnDelimiter->Click += gcnew System::EventHandler(this, &MyForm::BtnDouble_Click);
 			// 
-			// button6
+			// btnNum1
 			// 
-			this->button6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button6->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum1->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button6->Location = System::Drawing::Point(33, 346);
-			this->button6->Name = L"button6";
-			this->button6->Size = System::Drawing::Size(63, 64);
-			this->button6->TabIndex = 9;
-			this->button6->Text = L"1";
-			this->button6->UseVisualStyleBackColor = false;
-			this->button6->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum1->Location = System::Drawing::Point(33, 346);
+			this->btnNum1->Name = L"btnNum1";
+			this->btnNum1->Size = System::Drawing::Size(63, 64);
+			this->btnNum1->TabIndex = 9;
+			this->btnNum1->Text = L"1";
+			this->btnNum1->UseVisualStyleBackColor = false;
+			this->btnNum1->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button7
+			// btnNum4
 			// 
-			this->button7->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button7->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum4->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button7->Location = System::Drawing::Point(33, 276);
-			this->button7->Name = L"button7";
-			this->button7->Size = System::Drawing::Size(63, 64);
-			this->button7->TabIndex = 10;
-			this->button7->Text = L"4";
-			this->button7->UseVisualStyleBackColor = false;
-			this->button7->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum4->Location = System::Drawing::Point(33, 276);
+			this->btnNum4->Name = L"btnNum4";
+			this->btnNum4->Size = System::Drawing::Size(63, 64);
+			this->btnNum4->TabIndex = 10;
+			this->btnNum4->Text = L"4";
+			this->btnNum4->UseVisualStyleBackColor = false;
+			this->btnNum4->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button8
+			// btnNum7
 			// 
-			this->button8->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum7->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button8->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum7->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button8->Location = System::Drawing::Point(33, 206);
-			this->button8->Name = L"button8";
-			this->button8->Size = System::Drawing::Size(63, 64);
-			this->button8->TabIndex = 11;
-			this->button8->Text = L"7";
-			this->button8->UseVisualStyleBackColor = false;
-			this->button8->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum7->Location = System::Drawing::Point(33, 206);
+			this->btnNum7->Name = L"btnNum7";
+			this->btnNum7->Size = System::Drawing::Size(63, 64);
+			this->btnNum7->TabIndex = 11;
+			this->btnNum7->Text = L"7";
+			this->btnNum7->UseVisualStyleBackColor = false;
+			this->btnNum7->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
 			// btnResult
 			// 
@@ -274,80 +275,80 @@ namespace Calculator {
 			this->btnMin->UseVisualStyleBackColor = false;
 			this->btnMin->Click += gcnew System::EventHandler(this, &MyForm::BtnMin_Click);
 			// 
-			// btnBack
+			// btnSignChange
 			// 
-			this->btnBack->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnSignChange->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->btnBack->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnBack->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnSignChange->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnSignChange->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->btnBack->Location = System::Drawing::Point(33, 416);
-			this->btnBack->Name = L"btnBack";
-			this->btnBack->Size = System::Drawing::Size(63, 64);
-			this->btnBack->TabIndex = 16;
-			this->btnBack->Text = L"+/-";
-			this->btnBack->UseVisualStyleBackColor = false;
-			this->btnBack->Click += gcnew System::EventHandler(this, &MyForm::BtnBack_Click);
+			this->btnSignChange->Location = System::Drawing::Point(33, 416);
+			this->btnSignChange->Name = L"btnSignChange";
+			this->btnSignChange->Size = System::Drawing::Size(63, 64);
+			this->btnSignChange->TabIndex = 16;
+			this->btnSignChange->Text = L"+/-";
+			this->btnSignChange->UseVisualStyleBackColor = false;
+			this->btnSignChange->Click += gcnew System::EventHandler(this, &MyForm::BtnBack_Click);
 			// 
-			// button14
+			// btnNum3
 			// 
-			this->button14->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button14->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button14->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum3->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button14->Location = System::Drawing::Point(174, 346);
-			this->button14->Name = L"button14";
-			this->button14->Size = System::Drawing::Size(63, 64);
-			this->button14->TabIndex = 17;
-			this->button14->Text = L"3";
-			this->button14->UseVisualStyleBackColor = false;
-			this->button14->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum3->Location = System::Drawing::Point(174, 346);
+			this->btnNum3->Name = L"btnNum3";
+			this->btnNum3->Size = System::Drawing::Size(63, 64);
+			this->btnNum3->TabIndex = 17;
+			this->btnNum3->Text = L"3";
+			this->btnNum3->UseVisualStyleBackColor = false;
+			this->btnNum3->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button15
+			// btnNum6
 			// 
-			this->button15->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button15->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button15->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum6->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button15->Location = System::Drawing::Point(174, 276);
-			this->button15->Name = L"button15";
-			this->button15->Size = System::Drawing::Size(63, 64);
-			this->button15->TabIndex = 18;
-			this->button15->Text = L"6";
-			this->button15->UseVisualStyleBackColor = false;
-			this->button15->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum6->Location = System::Drawing::Point(174, 276);
+			this->btnNum6->Name = L"btnNum6";
+			this->btnNum6->Size = System::Drawing::Size(63, 64);
+			this->btnNum6->TabIndex = 18;
+			this->btnNum6->Text = L"6";
+			this->btnNum6->UseVisualStyleBackColor = false;
+			this->btnNum6->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button16
+			// btnNum9
 			// 
-			this->button16->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum9->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button16->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button16->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum9->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum9->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button16->Location = System::Drawing::Point(174, 206);
-			this->button16->Name = L"button16";
-			this->button16->Size = System::Drawing::Size(63, 64);
-			this->button16->TabIndex = 19;
-			this->button16->Text = L"9";
-			this->button16->UseVisualStyleBackColor = false;
-			this->button16->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum9->Location = System::Drawing::Point(174, 206);
+			this->btnNum9->Name = L"btnNum9";
+			this->btnNum9->Size = System::Drawing::Size(63, 64);
+			this->btnNum9->TabIndex = 19;
+			this->btnNum9->Text = L"9";
+			this->btnNum9->UseVisualStyleBackColor = false;
+			this->btnNum9->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
-			// button17
+			// btnNum0
 			// 
-			this->button17->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnNum0->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->button17->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button17->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnNum0->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNum0->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button17->Location = System::Drawing::Point(102, 416);
-			this->button17->Name = L"button17";
-			this->button17->Size = System::Drawing::Size(63, 64);
-			this->button17->TabIndex = 20;
-			this->button17->Text = L"0";
-			this->button17->UseVisualStyleBackColor = false;
-			this->button17->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
+			this->btnNum0->Location = System::Drawing::Point(102, 416);
+			this->btnNum0->Name = L"btnNum0";
+			this->btnNum0->Size = System::Drawing::Size(63, 64);
+			this->btnNum0->TabIndex = 20;
+			this->btnNum0->Text = L"0";
+			this->btnNum0->UseVisualStyleBackColor = false;
+			this->btnNum0->Click += gcnew System::EventHandler(this, &MyForm::Button_num_Click);
 			// 
 			// btnAdd
 			// 
@@ -409,20 +410,20 @@ namespace Calculator {
 			this->btn2->UseVisualStyleBackColor = false;
 			this->btn2->Click += gcnew System::EventHandler(this, &MyForm::Btn2_Click);
 			// 
-			// btnSqrt
+			// btnSqrtRoot
 			// 
-			this->btnSqrt->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
+			this->btnSqrtRoot->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
-			this->btnSqrt->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnSqrt->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnSqrtRoot->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnSqrtRoot->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->btnSqrt->Location = System::Drawing::Point(102, 136);
-			this->btnSqrt->Name = L"btnSqrt";
-			this->btnSqrt->Size = System::Drawing::Size(63, 64);
-			this->btnSqrt->TabIndex = 25;
-			this->btnSqrt->Text = L"sqrt x";
-			this->btnSqrt->UseVisualStyleBackColor = false;
-			this->btnSqrt->Click += gcnew System::EventHandler(this, &MyForm::BtnSqrt_Click);
+			this->btnSqrtRoot->Location = System::Drawing::Point(102, 136);
+			this->btnSqrtRoot->Name = L"btnSqrtRoot";
+			this->btnSqrtRoot->Size = System::Drawing::Size(63, 64);
+			this->btnSqrtRoot->TabIndex = 25;
+			this->btnSqrtRoot->Text = L"sqrt x";
+			this->btnSqrtRoot->UseVisualStyleBackColor = false;
+			this->btnSqrtRoot->Click += gcnew System::EventHandler(this, &MyForm::BtnSqrt_Click);
 			// 
 			// MyForm
 			// 
@@ -431,26 +432,26 @@ namespace Calculator {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
 				static_cast<System::Int32>(static_cast<System::Byte>(244)));
 			this->ClientSize = System::Drawing::Size(337, 507);
-			this->Controls->Add(this->btnSqrt);
+			this->Controls->Add(this->btnSqrtRoot);
 			this->Controls->Add(this->btn2);
 			this->Controls->Add(this->btnMult);
 			this->Controls->Add(this->btnDiv);
 			this->Controls->Add(this->btnAdd);
-			this->Controls->Add(this->button17);
-			this->Controls->Add(this->button16);
-			this->Controls->Add(this->button15);
-			this->Controls->Add(this->button14);
-			this->Controls->Add(this->btnBack);
+			this->Controls->Add(this->btnNum0);
+			this->Controls->Add(this->btnNum9);
+			this->Controls->Add(this->btnNum6);
+			this->Controls->Add(this->btnNum3);
+			this->Controls->Add(this->btnSignChange);
 			this->Controls->Add(this->btnMin);
 			this->Controls->Add(this->btnResult);
-			this->Controls->Add(this->button8);
-			this->Controls->Add(this->button7);
-			this->Controls->Add(this->button6);
-			this->Controls->Add(this->btnDouble);
-			this->Controls->Add(this->button4);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->btnDel);
+			this->Controls->Add(this->btnNum7);
+			this->Controls->Add(this->btnNum4);
+			this->Controls->Add(this->btnNum1);
+			this->Controls->Add(this->btnDelimiter);
+			this->Controls->Add(this->btnNum8);
+			this->Controls->Add(this->btnNum2);
+			this->Controls->Add(this->btnNum5);
+			this->Controls->Add(this->btnClear);
 			this->Controls->Add(this->labOutput);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
