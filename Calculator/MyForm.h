@@ -546,8 +546,8 @@ namespace Calculator {
 			}
 			ShowArguments();
 		}
-		private: System::Void Calculate(ACTION action) {
-			switch (action)
+		private: System::Void Calculate(ACTION actionArg) {
+			switch (actionArg)
 			{
 			case Calculator::ADD:
 				argumentResult = argument1 + argument2;
@@ -577,14 +577,22 @@ namespace Calculator {
 			}
 			this->labOutput->Text = System::Convert::ToString(argumentResult);
 		}
-		private: System::Void UseStatus() {
+		private: System::Void UseStatus(ACTION actionArg) {
+			if (actionArg == SQUARE_ROOT || actionArg == SQUARE) {
+				status = WORK;
+				Calculate(actionArg);
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				return;
+			}
 			switch (status)
 			{
 			case Calculator::START:
 				status = WORK;
 				break;
 			case Calculator::WORK:
-				Calculate(action);
+				Calculate(actionArg);
 				argument1 = argumentResult;
 				argument2 = 0.0;
 				argumentResult = 0.0;
@@ -611,12 +619,16 @@ namespace Calculator {
 			ShowArguments();
 		}
 		private: System::Void doSimpleAction(ACTION actionArg) {
-			UseStatus();
+			UseStatus(actionArg);
 			isEndOperation = true;
 			action = actionArg;
 			ShowArguments();
 		}
 		
+
+		private: System::Void BtnClear_Click(System::Object^ sender, System::EventArgs^ e) {
+			ClearAll();
+		}
 
 		private: System::Void BtnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
 			doSimpleAction(ADD);
@@ -635,13 +647,15 @@ namespace Calculator {
 		}
 
 		private: System::Void Btn2_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->op = '^';
-			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+			doSimpleAction(SQUARE);
+			//this->op = '^';
+			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
 		}
 
 		private: System::Void BtnSqrt_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->op = 's';
-			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+			doSimpleAction(SQUARE_ROOT);
+			//this->op = 's';
+			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
 		}
 
 		private: System::Void BtnResult_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -684,14 +698,6 @@ namespace Calculator {
 			else {
 				this->labOutput->Text = System::Convert::ToString(res);
 			}
-		}
-
-		private: System::Void BtnClear_Click(System::Object^ sender, System::EventArgs^ e) {
-			ClearAll();
-			//this->op = 0;
-			//this->num1 = 0;
-			//this->labOutput->Text = "0";
-			//this->isEndOperation = true;
 		}
 
 		private: System::Void BtnSignChange_Click(System::Object^ sender, System::EventArgs^ e) {
