@@ -530,6 +530,7 @@ namespace Calculator {
 			else {
 				this->labOutput->Text = this->labOutput->Text + btn->Text;
 			}
+
 			switch (status)
 			{
 			case Calculator::START:
@@ -546,8 +547,8 @@ namespace Calculator {
 			}
 			ShowArguments();
 		}
-		private: System::Void Calculate(ACTION actionArg) {
-			switch (actionArg)
+		private: System::Void Calculate() {
+			switch (action)
 			{
 			case Calculator::ADD:
 				argumentResult = argument1 + argument2;
@@ -579,8 +580,21 @@ namespace Calculator {
 		}
 		private: System::Void UseStatus(ACTION actionArg) {
 			if (actionArg == SQUARE_ROOT || actionArg == SQUARE) {
+				action = actionArg;
+				argument1 = System::Convert::ToDouble(this->labOutput->Text);
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				Calculate();
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				action = CLEAR;
+				status = START;
+				return;
+			}
+
+			if (actionArg == DIVIDE && argument2 == 0 ) {
 				status = WORK;
-				Calculate(actionArg);
 				argument1 = argumentResult;
 				argument2 = 0.0;
 				argumentResult = 0.0;
@@ -592,7 +606,7 @@ namespace Calculator {
 				status = WORK;
 				break;
 			case Calculator::WORK:
-				Calculate(actionArg);
+				Calculate();
 				argument1 = argumentResult;
 				argument2 = 0.0;
 				argumentResult = 0.0;
@@ -648,14 +662,10 @@ namespace Calculator {
 
 		private: System::Void Btn2_Click(System::Object^ sender, System::EventArgs^ e) {
 			doSimpleAction(SQUARE);
-			//this->op = '^';
-			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
 		}
 
 		private: System::Void BtnSqrt_Click(System::Object^ sender, System::EventArgs^ e) {
 			doSimpleAction(SQUARE_ROOT);
-			//this->op = 's';
-			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
 		}
 
 		private: System::Void BtnResult_Click(System::Object^ sender, System::EventArgs^ e) {
