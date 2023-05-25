@@ -577,6 +577,24 @@ namespace Calculator {
 			}
 			this->labOutput->Text = System::Convert::ToString(argumentResult);
 		}
+		private: System::Void UseStatus() {
+			switch (status)
+			{
+			case Calculator::START:
+				status = WORK;
+				break;
+			case Calculator::WORK:
+				Calculate(action);
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				break;
+			case Calculator::END:
+				break;
+			default:
+				break;
+			}
+		}
 		private: System::Void ShowArguments() {
 			this->labArg1->Text = System::Convert::ToString(argument1);
 			this->labArg2->Text = System::Convert::ToString(argument2);
@@ -592,71 +610,28 @@ namespace Calculator {
 			isEndOperation = true;
 			ShowArguments();
 		}
+		private: System::Void doSimpleAction(ACTION actionArg) {
+			UseStatus();
+			isEndOperation = true;
+			action = actionArg;
+			ShowArguments();
+		}
+		
 
 		private: System::Void BtnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
-			switch (status)
-			{
-			case Calculator::START:
-				status = WORK;
-				break;
-			case Calculator::WORK:
-				Calculate(action);
-				argument1 = argumentResult;
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				break;
-			case Calculator::END:
-				break;
-			default:
-				break;
-			}
-			action = ADD;
-			isEndOperation = true;
-			ShowArguments();
-			//this->op = '+';
-			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-			//this->labOutput->Text = "0";
-			//this->isEndOperation = true;
+			doSimpleAction(ADD);
 		}
 
 		private: System::Void BtnMin_Click(System::Object^ sender, System::EventArgs^ e) {
-			switch (status)
-			{
-			case Calculator::START:
-				status = WORK;
-				break;
-			case Calculator::WORK:
-				Calculate(action);
-				argument1 = argumentResult;
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				break;
-			case Calculator::END:
-				break;
-			default:
-				break;
-			}
-			action = MINUS;
-			isEndOperation = true;
-			ShowArguments();
-			//this->op = '-';
-			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-			//this->labOutput->Text = "0";
-			//this->isEndOperation = true;
+			doSimpleAction(MINUS);
 		}
 
 		private: System::Void BtnMult_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->op = '*';
-			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-			this->labOutput->Text = "0";
-			this->isEndOperation = true;
+			doSimpleAction(MULTIPLY);
 		}
 
 		private: System::Void BtnDiv_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->op = '/';
-			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-			this->labOutput->Text = "0";
-			this->isEndOperation = true;
+			doSimpleAction(DIVIDE);
 		}
 
 		private: System::Void Btn2_Click(System::Object^ sender, System::EventArgs^ e) {
