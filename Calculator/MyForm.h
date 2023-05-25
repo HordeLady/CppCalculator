@@ -517,34 +517,15 @@ namespace Calculator {
 
 		}
 
-		private: System::Void Button_num_Click(System::Object^ sender, System::EventArgs^ e) {
-			
-			Button^ btn = safe_cast<Button^>(sender);
-		
-			if (isEndOperation) {
-				//this->labOutput->Text = "0";
-				isEndOperation = false;
-				isEndOperation = false;
-				this->labOutput->Text = btn->Text;
-			}
-			else {
-				this->labOutput->Text = this->labOutput->Text + btn->Text;
-			}
 
-			switch (status)
-			{
-			case Calculator::START:
-				argument1 = System::Convert::ToDouble(this->labOutput->Text);
-				argument2 = 0.0;
-				break;
-			case Calculator::WORK:
-				argument2 = System::Convert::ToDouble(this->labOutput->Text);
-				break;
-			case Calculator::END:
-				break;
-			default:
-				break;
-			}
+		private: System::Void ClearAll() {
+			argument1 = 0.0;
+			argument2 = 0.0;
+			argumentResult = 0.0;
+			action = CLEAR;
+			status = START;
+			this->labOutput->Text = "0";
+			isEndOperation = true;
 			ShowArguments();
 		}
 		private: System::Void Calculate() {
@@ -578,6 +559,11 @@ namespace Calculator {
 			}
 			this->labOutput->Text = System::Convert::ToString(argumentResult);
 		}
+		private: System::Void ShowArguments() {
+			this->labArg1->Text = System::Convert::ToString(argument1);
+			this->labArg2->Text = System::Convert::ToString(argument2);
+			this->labArgResult->Text = System::Convert::ToString(argumentResult);
+		}
 		private: System::Void UseStatus(ACTION actionArg) {
 			if (actionArg == SQUARE_ROOT || actionArg == SQUARE) {
 				action = actionArg;
@@ -592,14 +578,8 @@ namespace Calculator {
 				status = START;
 				return;
 			}
+			// TODO: RMA. Need a divide-by-zero handler
 
-			if (actionArg == DIVIDE && argument2 == 0 ) {
-				status = WORK;
-				argument1 = argumentResult;
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				return;
-			}
 			switch (status)
 			{
 			case Calculator::START:
@@ -617,28 +597,42 @@ namespace Calculator {
 				break;
 			}
 		}
-		private: System::Void ShowArguments() {
-			this->labArg1->Text = System::Convert::ToString(argument1);
-			this->labArg2->Text = System::Convert::ToString(argument2);
-			this->labArgResult->Text = System::Convert::ToString(argumentResult);
-		}
-		private: System::Void ClearAll() {
-			argument1 = 0.0;
-			argument2 = 0.0;
-			argumentResult = 0.0;
-			action = CLEAR;
-			status = START;
-			this->labOutput->Text = "0";
-			isEndOperation = true;
-			ShowArguments();
-		}
 		private: System::Void doSimpleAction(ACTION actionArg) {
 			UseStatus(actionArg);
 			isEndOperation = true;
 			action = actionArg;
 			ShowArguments();
 		}
+
+		private: System::Void Button_num_Click(System::Object^ sender, System::EventArgs^ e) {
+			
+			Button^ btn = safe_cast<Button^>(sender);
 		
+			if (isEndOperation) {
+				isEndOperation = false;
+				isEndOperation = false;
+				this->labOutput->Text = btn->Text;
+			}
+			else {
+				this->labOutput->Text = this->labOutput->Text + btn->Text;
+			}
+
+			switch (status)
+			{
+			case Calculator::START:
+				argument1 = System::Convert::ToDouble(this->labOutput->Text);
+				argument2 = 0.0;
+				break;
+			case Calculator::WORK:
+				argument2 = System::Convert::ToDouble(this->labOutput->Text);
+				break;
+			case Calculator::END:
+				break;
+			default:
+				break;
+			}
+			ShowArguments();
+		}
 
 		private: System::Void BtnClear_Click(System::Object^ sender, System::EventArgs^ e) {
 			ClearAll();
