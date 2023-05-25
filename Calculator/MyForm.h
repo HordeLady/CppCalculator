@@ -19,67 +19,75 @@ namespace Calculator {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 
-	public:
-		MyForm(void)
-		{
-			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
-		}
+		private: System::Windows::Forms::Button^ btnNum0;
+		private: System::Windows::Forms::Button^ btnNum1;
+		private: System::Windows::Forms::Button^ btnNum2;
+		private: System::Windows::Forms::Button^ btnNum3;
+		private: System::Windows::Forms::Button^ btnNum4;
+		private: System::Windows::Forms::Button^ btnNum5;
+		private: System::Windows::Forms::Button^ btnNum6;
+		private: System::Windows::Forms::Button^ btnNum7;
+		private: System::Windows::Forms::Button^ btnNum8;
+		private: System::Windows::Forms::Button^ btnNum9;
 
-	protected:
-		/// <summary>
-		/// Освободить все используемые ресурсы.
-		/// </summary>
-		~MyForm()
-		{
-			if (components)
+		private: System::Windows::Forms::Button^ btnClear;
+		private: System::Windows::Forms::Button^ btnSqrtRoot;
+		private: System::Windows::Forms::Button^ btn2;
+		private: System::Windows::Forms::Button^ btnAdd;
+		private: System::Windows::Forms::Button^ btnMin;
+		private: System::Windows::Forms::Button^ btnMult;
+		private: System::Windows::Forms::Button^ btnDiv;
+		private: System::Windows::Forms::Button^ btnResult;
+
+		private: System::Windows::Forms::Button^ btnDelimiter;
+		private: System::Windows::Forms::Button^ btnSignChange;
+
+		private: double num1 = 0;
+		private: char op;
+		private: System::Windows::Forms::Label^ labOutput;
+		private: bool isEndOperation = true;
+
+		private: STATUS status = START;
+		private: ACTION action = CLEAR;
+		private: double argument1 = 0.0;
+		private: double argument2 = 0.0;
+		private: double argumentResult = 0.0;
+
+	private: System::Windows::Forms::Label^ labArg1;
+	private: System::Windows::Forms::Label^ labArg2;
+	private: System::Windows::Forms::Label^ labArgResult;
+
+	
+			   
+
+		public:
+			MyForm(void)
 			{
-				delete components;
+				InitializeComponent();
+				//
+				//TODO: добавьте код конструктора
+				//
 			}
-		}
-	private: System::Windows::Forms::Button^ btnNum0;
-	private: System::Windows::Forms::Button^ btnNum1;
-	private: System::Windows::Forms::Button^ btnNum2;
-	private: System::Windows::Forms::Button^ btnNum3;
-	private: System::Windows::Forms::Button^ btnNum4;
-	private: System::Windows::Forms::Button^ btnNum5;
-	private: System::Windows::Forms::Button^ btnNum6;
-	private: System::Windows::Forms::Button^ btnNum7;
-	private: System::Windows::Forms::Button^ btnNum8;
-	private: System::Windows::Forms::Button^ btnNum9;
 
-	private: System::Windows::Forms::Button^ btnClear;
-	private: System::Windows::Forms::Button^ btnSqrtRoot;
-	private: System::Windows::Forms::Button^ btn2;
-	private: System::Windows::Forms::Button^ btnAdd;
-	private: System::Windows::Forms::Button^ btnMin;
-	private: System::Windows::Forms::Button^ btnMult;
-	private: System::Windows::Forms::Button^ btnDiv;
-	private: System::Windows::Forms::Button^ btnResult;
+		protected:
+			/// <summary>
+			/// Освободить все используемые ресурсы.
+			/// </summary>
+			~MyForm()
+			{
+				if (components)
+				{
+					delete components;
+				}
+			}
 
-	private: System::Windows::Forms::Button^ btnDelimiter;
-	private: System::Windows::Forms::Button^ btnSignChange;
+		protected:
 
-	private: double num1 = 0;
-	private: char op;
-	private: System::Windows::Forms::Label^ labOutput;
-	private: bool isEndOperation = true;
-
-	private: STATUS status = START;
-	private: ACTION action = CLEAR;
-	private: double argument1;
-	private: double argument2;
-	private: double argumentResult;
-
-	protected:
-
-	private:
-		/// <summary>
-		/// Обязательная переменная конструктора.
-		/// </summary>
-		System::ComponentModel::Container^ components;
+		private:
+			/// <summary>
+			/// Обязательная переменная конструктора.
+			/// </summary>
+			System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -110,17 +118,20 @@ namespace Calculator {
 			this->btnMult = (gcnew System::Windows::Forms::Button());
 			this->btn2 = (gcnew System::Windows::Forms::Button());
 			this->btnSqrtRoot = (gcnew System::Windows::Forms::Button());
+			this->labArg1 = (gcnew System::Windows::Forms::Label());
+			this->labArg2 = (gcnew System::Windows::Forms::Label());
+			this->labArgResult = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// labOutput
 			// 
 			this->labOutput->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(185)), static_cast<System::Int32>(static_cast<System::Byte>(116)),
 				static_cast<System::Int32>(static_cast<System::Byte>(254)));
-			this->labOutput->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labOutput->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labOutput->Location = System::Drawing::Point(24, 27);
+			this->labOutput->Location = System::Drawing::Point(26, 9);
 			this->labOutput->Name = L"labOutput";
-			this->labOutput->Size = System::Drawing::Size(291, 87);
+			this->labOutput->Size = System::Drawing::Size(291, 37);
 			this->labOutput->TabIndex = 1;
 			this->labOutput->Text = L"0";
 			this->labOutput->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -138,7 +149,7 @@ namespace Calculator {
 			this->btnClear->TabIndex = 4;
 			this->btnClear->Text = L"AC";
 			this->btnClear->UseVisualStyleBackColor = false;
-			this->btnClear->Click += gcnew System::EventHandler(this, &MyForm::BtnDel_Click);
+			this->btnClear->Click += gcnew System::EventHandler(this, &MyForm::BtnClear_Click);
 			// 
 			// btnNum5
 			// 
@@ -198,7 +209,7 @@ namespace Calculator {
 			this->btnDelimiter->TabIndex = 8;
 			this->btnDelimiter->Text = L",";
 			this->btnDelimiter->UseVisualStyleBackColor = false;
-			this->btnDelimiter->Click += gcnew System::EventHandler(this, &MyForm::BtnDouble_Click);
+			this->btnDelimiter->Click += gcnew System::EventHandler(this, &MyForm::BtnDelimiter_Click);
 			// 
 			// btnNum1
 			// 
@@ -288,7 +299,7 @@ namespace Calculator {
 			this->btnSignChange->TabIndex = 16;
 			this->btnSignChange->Text = L"+/-";
 			this->btnSignChange->UseVisualStyleBackColor = false;
-			this->btnSignChange->Click += gcnew System::EventHandler(this, &MyForm::BtnBack_Click);
+			this->btnSignChange->Click += gcnew System::EventHandler(this, &MyForm::BtnSignChange_Click);
 			// 
 			// btnNum3
 			// 
@@ -425,6 +436,45 @@ namespace Calculator {
 			this->btnSqrtRoot->UseVisualStyleBackColor = false;
 			this->btnSqrtRoot->Click += gcnew System::EventHandler(this, &MyForm::BtnSqrt_Click);
 			// 
+			// labArg1
+			// 
+			this->labArg1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->labArg1->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labArg1->Location = System::Drawing::Point(27, 62);
+			this->labArg1->Name = L"labArg1";
+			this->labArg1->Size = System::Drawing::Size(152, 30);
+			this->labArg1->TabIndex = 26;
+			this->labArg1->Text = L"0";
+			this->labArg1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			// 
+			// labArg2
+			// 
+			this->labArg2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->labArg2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labArg2->Location = System::Drawing::Point(185, 62);
+			this->labArg2->Name = L"labArg2";
+			this->labArg2->Size = System::Drawing::Size(133, 30);
+			this->labArg2->TabIndex = 27;
+			this->labArg2->Text = L"0";
+			this->labArg2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			// 
+			// labArgResult
+			// 
+			this->labArgResult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->labArgResult->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labArgResult->Location = System::Drawing::Point(27, 99);
+			this->labArgResult->Name = L"labArgResult";
+			this->labArgResult->Size = System::Drawing::Size(291, 30);
+			this->labArgResult->TabIndex = 28;
+			this->labArgResult->Text = L"0";
+			this->labArgResult->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -432,6 +482,9 @@ namespace Calculator {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
 				static_cast<System::Int32>(static_cast<System::Byte>(244)));
 			this->ClientSize = System::Drawing::Size(337, 507);
+			this->Controls->Add(this->labArgResult);
+			this->Controls->Add(this->labArg2);
+			this->Controls->Add(this->labArg1);
 			this->Controls->Add(this->btnSqrtRoot);
 			this->Controls->Add(this->btn2);
 			this->Controls->Add(this->btnMult);
@@ -464,113 +517,218 @@ namespace Calculator {
 
 		}
 
-	private: System::Void Button_num_Click(System::Object^ sender, System::EventArgs^ e) {
-		Button^ btn = safe_cast<Button^>(sender);
+		private: System::Void Button_num_Click(System::Object^ sender, System::EventArgs^ e) {
+			
+			Button^ btn = safe_cast<Button^>(sender);
 		
-		if (isEndOperation) {
-			this->labOutput->Text = "0";
-			isEndOperation = false;
-			this->labOutput->Text = btn->Text;
+			if (isEndOperation) {
+				//this->labOutput->Text = "0";
+				isEndOperation = false;
+				isEndOperation = false;
+				this->labOutput->Text = btn->Text;
+			}
+			else {
+				this->labOutput->Text = this->labOutput->Text + btn->Text;
+			}
+			switch (status)
+			{
+			case Calculator::START:
+				argument1 = System::Convert::ToDouble(this->labOutput->Text);
+				argument2 = 0.0;
+				break;
+			case Calculator::WORK:
+				argument2 = System::Convert::ToDouble(this->labOutput->Text);
+				break;
+			case Calculator::END:
+				break;
+			default:
+				break;
+			}
+			ShowArguments();
 		}
-		else {
+		private: System::Void Calculate(ACTION action) {
+			switch (action)
+			{
+			case Calculator::ADD:
+				argumentResult = argument1 + argument2;
+				break;
+			case Calculator::MINUS:
+				argumentResult = argument1 - argument2;
+				break;
+			case Calculator::MULTIPLY:
+				argumentResult = argument1 * argument2;
+				break;
+			case Calculator::DIVIDE:
+				argumentResult = argument1 / argument2;
+				break;
+			case Calculator::SQUARE_ROOT:
+				argumentResult = sqrt(argument1);
+				break;
+			case Calculator::SQUARE:
+				argumentResult = argument1 * argument1;
+				break;
+			case Calculator::EQUALS:
+				argumentResult = argument1;
+				break;
+			case Calculator::CLEAR:
+				break;
+			default:
+				break;
+			}
+			this->labOutput->Text = System::Convert::ToString(argumentResult);
+		}
+		private: System::Void ShowArguments() {
+			this->labArg1->Text = System::Convert::ToString(argument1);
+			this->labArg2->Text = System::Convert::ToString(argument2);
+			this->labArgResult->Text = System::Convert::ToString(argumentResult);
+		}
+		private: System::Void ClearAll() {
+			argument1 = 0.0;
+			argument2 = 0.0;
+			argumentResult = 0.0;
+			action = CLEAR;
+			status = START;
+			this->labOutput->Text = "0";
+			isEndOperation = true;
+			ShowArguments();
+		}
+
+		private: System::Void BtnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
+			switch (status)
+			{
+			case Calculator::START:
+				status = WORK;
+				break;
+			case Calculator::WORK:
+				Calculate(action);
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				break;
+			case Calculator::END:
+				break;
+			default:
+				break;
+			}
+			action = ADD;
+			isEndOperation = true;
+			ShowArguments();
+			//this->op = '+';
+			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+			//this->labOutput->Text = "0";
+			//this->isEndOperation = true;
+		}
+
+		private: System::Void BtnMin_Click(System::Object^ sender, System::EventArgs^ e) {
+			switch (status)
+			{
+			case Calculator::START:
+				status = WORK;
+				break;
+			case Calculator::WORK:
+				Calculate(action);
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				break;
+			case Calculator::END:
+				break;
+			default:
+				break;
+			}
+			action = MINUS;
+			isEndOperation = true;
+			ShowArguments();
+			//this->op = '-';
+			//this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+			//this->labOutput->Text = "0";
+			//this->isEndOperation = true;
+		}
+
+		private: System::Void BtnMult_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->op = '*';
+			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+			this->labOutput->Text = "0";
+			this->isEndOperation = true;
+		}
+
+		private: System::Void BtnDiv_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->op = '/';
+			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+			this->labOutput->Text = "0";
+			this->isEndOperation = true;
+		}
+
+		private: System::Void Btn2_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->op = '^';
+			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+		}
+
+		private: System::Void BtnSqrt_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->op = 's';
+			this->num1 = System::Convert::ToDouble(this->labOutput->Text);
+		}
+
+		private: System::Void BtnResult_Click(System::Object^ sender, System::EventArgs^ e) {
+			double num2 = System::Convert::ToDouble(this->labOutput->Text);
+			double res = 0;
+			bool err = false;
+			switch (this->op) {
+				case('+'): 
+					res = this->num1 + num2;
+					break;
+				case('*'):
+					res = this->num1 * num2;
+					break;
+				case('-'):
+					res = this->num1 - num2;
+					break;
+				case('/'):
+					if (num2 == 0) {
+						err = true;
+						break;
+					}
+					else {
+						res = this->num1 / num2;
+						break;
+					}
+				case('^'):
+					res = this->num1 * this->num1;
+					break;
+				case('s'):
+					if (this->num1 < 0) {
+						err = true;
+						break;
+					}
+					res = sqrt(this->num1);
+					break;
+			}
+			if (err) {
+				this->labOutput->Text = "ERROR";
+			}
+			else {
+				this->labOutput->Text = System::Convert::ToString(res);
+			}
+		}
+
+		private: System::Void BtnClear_Click(System::Object^ sender, System::EventArgs^ e) {
+			ClearAll();
+			//this->op = 0;
+			//this->num1 = 0;
+			//this->labOutput->Text = "0";
+			//this->isEndOperation = true;
+		}
+
+		private: System::Void BtnSignChange_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->num1 = System::Convert::ToInt32(this->labOutput->Text);
+			this->num1 = this->num1 * -1;
+			this->labOutput->Text = System::Convert::ToString(this->num1);
+		}
+
+		private: System::Void BtnDelimiter_Click(System::Object^ sender, System::EventArgs^ e) {
+			Button^ btn = safe_cast<Button^>(sender);
 			this->labOutput->Text = this->labOutput->Text + btn->Text;
 		}
-	}
-
-	private: System::Void BtnAdd_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->op = '+';
-		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-		this->labOutput->Text = "0";
-		this->isEndOperation = true;
-	}
-
-	private: System::Void BtnMin_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->op = '-';
-		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-		this->labOutput->Text = "0";
-		this->isEndOperation = true;
-	}
-
-	private: System::Void BtnMult_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->op = '*';
-		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-		this->labOutput->Text = "0";
-		this->isEndOperation = true;
-	}
-
-	private: System::Void BtnDiv_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->op = '/';
-		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-		this->labOutput->Text = "0";
-		this->isEndOperation = true;
-	}
-
-	private: System::Void Btn2_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->op = '^';
-		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-	}
-
-	private: System::Void BtnSqrt_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->op = 's';
-		this->num1 = System::Convert::ToDouble(this->labOutput->Text);
-	}
-
-	private: System::Void BtnResult_Click(System::Object^ sender, System::EventArgs^ e) {
-	    double num2 = System::Convert::ToDouble(this->labOutput->Text);
-		double res = 0;
-		bool err = false;
-		switch (this->op) {
-			case('+'): 
-				res = this->num1 + num2;
-				break;
-			case('*'):
-				res = this->num1 * num2;
-				break;
-			case('-'):
-				res = this->num1 - num2;
-				break;
-			case('/'):
-				if (num2 == 0) {
-					err = true;
-					break;
-				}
-				else {
-					res = this->num1 / num2;
-					break;
-				}
-			case('^'):
-				res = this->num1 * this->num1;
-				break;
-			case('s'):
-				if (this->num1 < 0) {
-					err = true;
-					break;
-				}
-				res = sqrt(this->num1);
-				break;
-		}
-		if (err) {
-			this->labOutput->Text = "ERROR";
-		}
-		else {
-			this->labOutput->Text = System::Convert::ToString(res);
-		}
-	}
-private: System::Void BtnDel_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->op = 0;
-	this->num1 = 0;
-	this->labOutput->Text = "0";
-	this->isEndOperation = true;
-}
-private: System::Void BtnBack_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->num1 = System::Convert::ToInt32(this->labOutput->Text);
-	this->num1 = this->num1 * -1;
-	this->labOutput->Text = System::Convert::ToString(this->num1);
-}
-private: System::Void BtnDouble_Click(System::Object^ sender, System::EventArgs^ e) {
-	Button^ btn = safe_cast<Button^>(sender);
-	this->labOutput->Text = this->labOutput->Text + btn->Text;
-}
-};
+	};
 }
 
