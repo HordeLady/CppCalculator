@@ -207,7 +207,7 @@ namespace Calculator {
 			this->btnDelimiter->Name = L"btnDelimiter";
 			this->btnDelimiter->Size = System::Drawing::Size(63, 64);
 			this->btnDelimiter->TabIndex = 8;
-			this->btnDelimiter->Text = L",";
+			this->btnDelimiter->Text = L".";
 			this->btnDelimiter->UseVisualStyleBackColor = false;
 			this->btnDelimiter->Click += gcnew System::EventHandler(this, &MyForm::BtnDelimiter_Click);
 			// 
@@ -565,7 +565,9 @@ namespace Calculator {
 			this->labArgResult->Text = System::Convert::ToString(argumentResult);
 		}
 		private: System::Void UseStatus(ACTION actionArg) {
-			if (actionArg == SQUARE_ROOT || actionArg == SQUARE) {
+			switch (actionArg)
+			{
+			case Calculator::SQUARE_ROOT:
 				action = actionArg;
 				argument1 = System::Convert::ToDouble(this->labOutput->Text);
 				argument2 = 0.0;
@@ -576,27 +578,49 @@ namespace Calculator {
 				argumentResult = 0.0;
 				action = CLEAR;
 				status = START;
-				return;
-			}
-			// TODO: RMA. Need a divide-by-zero handler
-
-			switch (status)
-			{
-			case Calculator::START:
-				status = WORK;
 				break;
-			case Calculator::WORK:
+			case Calculator::SQUARE:
+				action = actionArg;
+				argument1 = System::Convert::ToDouble(this->labOutput->Text);
+				argument2 = 0.0;
+				argumentResult = 0.0;
 				Calculate();
 				argument1 = argumentResult;
 				argument2 = 0.0;
 				argumentResult = 0.0;
+				action = CLEAR;
+				status = START;
 				break;
-			case Calculator::END:
+			case Calculator::EQUALS:
+				Calculate();
+				status = WORK;
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				break;
+			case Calculator::CLEAR:
 				break;
 			default:
+				switch (status)
+				{
+				case Calculator::START:
+					status = WORK;
+					break;
+				case Calculator::WORK:
+					Calculate();
+					argument1 = argumentResult;
+					argument2 = 0.0;
+					argumentResult = 0.0;
+					break;
+				case Calculator::END:
+					break;
+				default:
+					break;
+				}
 				break;
 			}
 		}
+
 		private: System::Void doSimpleAction(ACTION actionArg) {
 			UseStatus(actionArg);
 			isEndOperation = true;
@@ -663,51 +687,19 @@ namespace Calculator {
 		}
 
 		private: System::Void BtnResult_Click(System::Object^ sender, System::EventArgs^ e) {
-			double num2 = System::Convert::ToDouble(this->labOutput->Text);
-			double res = 0;
-			bool err = false;
-			switch (this->op) {
-				case('+'): 
-					res = this->num1 + num2;
-					break;
-				case('*'):
-					res = this->num1 * num2;
-					break;
-				case('-'):
-					res = this->num1 - num2;
-					break;
-				case('/'):
-					if (num2 == 0) {
-						err = true;
-						break;
-					}
-					else {
-						res = this->num1 / num2;
-						break;
-					}
-				case('^'):
-					res = this->num1 * this->num1;
-					break;
-				case('s'):
-					if (this->num1 < 0) {
-						err = true;
-						break;
-					}
-					res = sqrt(this->num1);
-					break;
-			}
-			if (err) {
-				this->labOutput->Text = "ERROR";
-			}
-			else {
-				this->labOutput->Text = System::Convert::ToString(res);
-			}
+			doSimpleAction(EQUALS);
 		}
 
 		private: System::Void BtnSignChange_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->num1 = System::Convert::ToInt32(this->labOutput->Text);
-			this->num1 = this->num1 * -1;
-			this->labOutput->Text = System::Convert::ToString(this->num1);
+			if (status == WORK) {
+				argument2 *= -1;
+				this->labOutput->Text = System::Convert::ToString(argument2);
+			}
+			else {
+				argument1 *= -1;
+				this->labOutput->Text = System::Convert::ToString(argument1);
+			}
+			ShowArguments();
 		}
 
 		private: System::Void BtnDelimiter_Click(System::Object^ sender, System::EventArgs^ e) {
