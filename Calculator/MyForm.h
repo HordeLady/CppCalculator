@@ -518,116 +518,6 @@ namespace Calculator {
 		}
 
 
-		private: System::Void ClearAll() {
-			argument1 = 0.0;
-			argument2 = 0.0;
-			argumentResult = 0.0;
-			action = CLEAR;
-			status = START;
-			this->labOutput->Text = "0";
-			isEndOperation = true;
-			ShowArguments();
-		}
-		private: System::Void Calculate() {
-			switch (action)
-			{
-			case Calculator::ADD:
-				argumentResult = argument1 + argument2;
-				break;
-			case Calculator::MINUS:
-				argumentResult = argument1 - argument2;
-				break;
-			case Calculator::MULTIPLY:
-				argumentResult = argument1 * argument2;
-				break;
-			case Calculator::DIVIDE:
-				argumentResult = argument1 / argument2;
-				break;
-			case Calculator::SQUARE_ROOT:
-				argumentResult = sqrt(argument1);
-				break;
-			case Calculator::SQUARE:
-				argumentResult = argument1 * argument1;
-				break;
-			case Calculator::EQUALS:
-				argumentResult = argument1;
-				break;
-			case Calculator::CLEAR:
-				break;
-			default:
-				break;
-			}
-			this->labOutput->Text = System::Convert::ToString(argumentResult);
-		}
-		private: System::Void ShowArguments() {
-			this->labArg1->Text = System::Convert::ToString(argument1);
-			this->labArg2->Text = System::Convert::ToString(argument2);
-			this->labArgResult->Text = System::Convert::ToString(argumentResult);
-		}
-		private: System::Void UseStatus(ACTION actionArg) {
-			switch (actionArg)
-			{
-			case Calculator::SQUARE_ROOT:
-				action = actionArg;
-				argument1 = System::Convert::ToDouble(this->labOutput->Text);
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				Calculate();
-				argument1 = argumentResult;
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				action = CLEAR;
-				status = START;
-				break;
-			case Calculator::SQUARE:
-				action = actionArg;
-				argument1 = System::Convert::ToDouble(this->labOutput->Text);
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				Calculate();
-				argument1 = argumentResult;
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				action = CLEAR;
-				status = START;
-				break;
-			case Calculator::EQUALS:
-				Calculate();
-				status = WORK;
-				argument1 = argumentResult;
-				argument2 = 0.0;
-				argumentResult = 0.0;
-				break;
-			case Calculator::CLEAR:
-				break;
-			default:
-				switch (status)
-				{
-				case Calculator::START:
-					status = WORK;
-					break;
-				case Calculator::WORK:
-					Calculate();
-					argument1 = argumentResult;
-					argument2 = 0.0;
-					argumentResult = 0.0;
-					break;
-				case Calculator::END:
-					break;
-				default:
-					break;
-				}
-				break;
-			}
-		}
-
-		private: System::Void doSimpleAction(ACTION actionArg) {
-			UseStatus(actionArg);
-			isEndOperation = true;
-			action = actionArg;
-			ShowArguments();
-		}
-
 		private: System::Void Button_num_Click(System::Object^ sender, System::EventArgs^ e) {
 			
 			Button^ btn = safe_cast<Button^>(sender);
@@ -706,6 +596,118 @@ namespace Calculator {
 			Button^ btn = safe_cast<Button^>(sender);
 			this->labOutput->Text = this->labOutput->Text + btn->Text;
 		}
+
+
+		private: System::Void ClearAll() {
+			argument1 = 0.0;
+			argument2 = 0.0;
+			argumentResult = 0.0;
+			action = CLEAR;
+			status = START;
+			this->labOutput->Text = "0";
+			isEndOperation = true;
+			ShowArguments();
+		}
+		private: System::Void Calculate() {
+			switch (action)
+			{
+			case Calculator::ADD:
+				argumentResult = argument1 + argument2;
+				break;
+			case Calculator::MINUS:
+				argumentResult = argument1 - argument2;
+				break;
+			case Calculator::MULTIPLY:
+				argumentResult = argument1 * argument2;
+				break;
+			case Calculator::DIVIDE:
+				argumentResult = argument1 / argument2;
+				break;
+			case Calculator::SQUARE_ROOT:
+				argumentResult = sqrt(argument1);
+				break;
+			case Calculator::SQUARE:
+				argumentResult = argument1 * argument1;
+				break;
+			case Calculator::EQUALS:
+				argumentResult = argument1;
+				break;
+			case Calculator::CLEAR:
+				argumentResult = argument1;
+				break;
+			default:
+				break;
+			}
+			this->labOutput->Text = System::Convert::ToString(argumentResult);
+		}
+		private: System::Void ShowArguments() {
+			this->labArg1->Text = System::Convert::ToString(argument1);
+			this->labArg2->Text = System::Convert::ToString(argument2);
+			this->labArgResult->Text = System::Convert::ToString(argumentResult);
+		}
+		private: System::Void UseStatus(ACTION actionArg) {
+			switch (actionArg)
+			{
+			case Calculator::SQUARE_ROOT:
+				action = actionArg;
+				argument1 = System::Convert::ToDouble(this->labOutput->Text);
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				Calculate();
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				action = CLEAR;
+				status = START;
+				break;
+			case Calculator::SQUARE:
+				action = actionArg;
+				argument1 = System::Convert::ToDouble(this->labOutput->Text);
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				Calculate();
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				action = CLEAR;
+				status = START;
+				break;
+			case Calculator::EQUALS:
+				Calculate();
+				status = START;
+				argument1 = argumentResult;
+				argument2 = 0.0;
+				argumentResult = 0.0;
+				break;
+			case Calculator::CLEAR:
+				break;
+			default:
+				switch (status)
+				{
+				case Calculator::START:
+					status = WORK;
+					break;
+				case Calculator::WORK:
+					Calculate();
+					argument1 = argumentResult;
+					argument2 = 0.0;
+					argumentResult = 0.0;
+					break;
+				case Calculator::END:
+					break;
+				default:
+					break;
+				}
+				break;
+			}
+		}
+		private: System::Void doSimpleAction(ACTION actionArg) {
+			UseStatus(actionArg);
+			isEndOperation = true;
+			action = actionArg;
+			ShowArguments();
+		}
+
 	};
 }
 
