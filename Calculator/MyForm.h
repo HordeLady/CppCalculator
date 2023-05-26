@@ -125,13 +125,13 @@ namespace Calculator {
 			// 
 			// labOutput
 			// 
-			this->labOutput->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(185)), static_cast<System::Int32>(static_cast<System::Byte>(116)),
-				static_cast<System::Int32>(static_cast<System::Byte>(254)));
+			this->labOutput->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->labOutput->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labOutput->Location = System::Drawing::Point(26, 9);
+			this->labOutput->Location = System::Drawing::Point(32, 9);
 			this->labOutput->Name = L"labOutput";
-			this->labOutput->Size = System::Drawing::Size(291, 37);
+			this->labOutput->Size = System::Drawing::Size(274, 41);
 			this->labOutput->TabIndex = 1;
 			this->labOutput->Text = L"0";
 			this->labOutput->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -438,39 +438,45 @@ namespace Calculator {
 			// 
 			// labArg1
 			// 
-			this->labArg1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->labArg1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->labArg1->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labArg1->Location = System::Drawing::Point(27, 62);
+			this->labArg1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->labArg1->Location = System::Drawing::Point(32, 62);
 			this->labArg1->Name = L"labArg1";
-			this->labArg1->Size = System::Drawing::Size(152, 30);
+			this->labArg1->Size = System::Drawing::Size(133, 30);
 			this->labArg1->TabIndex = 26;
 			this->labArg1->Text = L"0";
 			this->labArg1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// labArg2
 			// 
-			this->labArg2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->labArg2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->labArg2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labArg2->Location = System::Drawing::Point(185, 62);
+			this->labArg2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->labArg2->Location = System::Drawing::Point(174, 62);
 			this->labArg2->Name = L"labArg2";
-			this->labArg2->Size = System::Drawing::Size(133, 30);
+			this->labArg2->Size = System::Drawing::Size(132, 30);
 			this->labArg2->TabIndex = 27;
 			this->labArg2->Text = L"0";
 			this->labArg2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// labArgResult
 			// 
-			this->labArgResult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)),
-				static_cast<System::Int32>(static_cast<System::Byte>(192)));
+			this->labArgResult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->labArgResult->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labArgResult->Location = System::Drawing::Point(27, 99);
+			this->labArgResult->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->labArgResult->Location = System::Drawing::Point(33, 99);
 			this->labArgResult->Name = L"labArgResult";
-			this->labArgResult->Size = System::Drawing::Size(291, 30);
+			this->labArgResult->Size = System::Drawing::Size(273, 30);
 			this->labArgResult->TabIndex = 28;
 			this->labArgResult->Text = L"0";
 			this->labArgResult->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
@@ -479,8 +485,8 @@ namespace Calculator {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
-				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->ClientSize = System::Drawing::Size(337, 507);
 			this->Controls->Add(this->labArgResult);
 			this->Controls->Add(this->labArg2);
@@ -506,13 +512,17 @@ namespace Calculator {
 			this->Controls->Add(this->btnNum5);
 			this->Controls->Add(this->btnClear);
 			this->Controls->Add(this->labOutput);
+			this->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximumSize = System::Drawing::Size(357, 550);
 			this->MinimumSize = System::Drawing::Size(357, 550);
 			this->Name = L"MyForm";
+			this->Opacity = 0.8;
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"MyForm";
+			this->Text = L"Calculator";
+			this->TransparencyKey = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->ResumeLayout(false);
 
 		}
