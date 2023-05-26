@@ -19,42 +19,49 @@ namespace Calculator {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 
-		private: System::Windows::Forms::Button^ btnNum0;
-		private: System::Windows::Forms::Button^ btnNum1;
-		private: System::Windows::Forms::Button^ btnNum2;
-		private: System::Windows::Forms::Button^ btnNum3;
-		private: System::Windows::Forms::Button^ btnNum4;
-		private: System::Windows::Forms::Button^ btnNum5;
-		private: System::Windows::Forms::Button^ btnNum6;
-		private: System::Windows::Forms::Button^ btnNum7;
-		private: System::Windows::Forms::Button^ btnNum8;
-		private: System::Windows::Forms::Button^ btnNum9;
+	private: System::Windows::Forms::Button^ btnNum0;
+	private: System::Windows::Forms::Button^ btnNum1;
+	private: System::Windows::Forms::Button^ btnNum2;
+	private: System::Windows::Forms::Button^ btnNum3;
+	private: System::Windows::Forms::Button^ btnNum4;
+	private: System::Windows::Forms::Button^ btnNum5;
+	private: System::Windows::Forms::Button^ btnNum6;
+	private: System::Windows::Forms::Button^ btnNum7;
+	private: System::Windows::Forms::Button^ btnNum8;
+	private: System::Windows::Forms::Button^ btnNum9;
 
-		private: System::Windows::Forms::Button^ btnClear;
-		private: System::Windows::Forms::Button^ btnSqrtRoot;
-		private: System::Windows::Forms::Button^ btn2;
-		private: System::Windows::Forms::Button^ btnAdd;
-		private: System::Windows::Forms::Button^ btnMin;
-		private: System::Windows::Forms::Button^ btnMult;
-		private: System::Windows::Forms::Button^ btnDiv;
-		private: System::Windows::Forms::Button^ btnResult;
+	private: System::Windows::Forms::Button^ btnClear;
+	private: System::Windows::Forms::Button^ btnSqrtRoot;
+	private: System::Windows::Forms::Button^ btn2;
+	private: System::Windows::Forms::Button^ btnAdd;
+	private: System::Windows::Forms::Button^ btnMin;
+	private: System::Windows::Forms::Button^ btnMult;
+	private: System::Windows::Forms::Button^ btnDiv;
+	private: System::Windows::Forms::Button^ btnResult;
 
-		private: System::Windows::Forms::Button^ btnDelimiter;
-		private: System::Windows::Forms::Button^ btnSignChange;
+	private: System::Windows::Forms::Button^ btnDelimiter;
+	private: System::Windows::Forms::Button^ btnSignChange;
 
-		private: double num1 = 0;
-		private: char op;
-		private: System::Windows::Forms::Label^ labOutput;
-		private: bool isEndOperation = true;
+	private: double num1 = 0;
+	private: char op;
+	private: System::Windows::Forms::Label^ labOutput;
+	private: bool isEndOperation = true;
 
-		private: STATUS status = START;
-		private: ACTION action = CLEAR;
-		private: double argument1 = 0.0;
-		private: double argument2 = 0.0;
-		private: double argumentResult = 0.0;
+	private: STATUS status = START;
+	private: ACTION action = CLEAR;
+	private: double argument1 = 0.0;
+	private: double argument2 = 0.0;
+	private: double argumentResult = 0.0;
+	
+	private: String^ strArgument1 = "0";
+	private: String^ strArgument2 = "0";
+	private: String^ strAction = "";
+	private: String^ strArgResult = "";
+
 
 	private: System::Windows::Forms::Label^ labArg1;
 	private: System::Windows::Forms::Label^ labArg2;
+	private: System::Windows::Forms::Label^ labOperationInfo;
 	private: System::Windows::Forms::Label^ labArgResult;
 
 	
@@ -121,6 +128,7 @@ namespace Calculator {
 			this->labArg1 = (gcnew System::Windows::Forms::Label());
 			this->labArg2 = (gcnew System::Windows::Forms::Label());
 			this->labArgResult = (gcnew System::Windows::Forms::Label());
+			this->labOperationInfo = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// labOutput
@@ -140,6 +148,7 @@ namespace Calculator {
 			// 
 			this->btnClear->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(231)), static_cast<System::Int32>(static_cast<System::Byte>(206)),
 				static_cast<System::Int32>(static_cast<System::Byte>(253)));
+			this->btnClear->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnClear->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnClear->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -155,6 +164,7 @@ namespace Calculator {
 			// 
 			this->btnNum5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum5->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum5->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -170,6 +180,7 @@ namespace Calculator {
 			// 
 			this->btnNum2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum2->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -185,6 +196,7 @@ namespace Calculator {
 			// 
 			this->btnNum8->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum8->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum8->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -200,6 +212,7 @@ namespace Calculator {
 			// 
 			this->btnDelimiter->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnDelimiter->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnDelimiter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnDelimiter->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -215,6 +228,7 @@ namespace Calculator {
 			// 
 			this->btnNum1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum1->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum1->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -230,6 +244,7 @@ namespace Calculator {
 			// 
 			this->btnNum4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum4->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum4->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -245,6 +260,7 @@ namespace Calculator {
 			// 
 			this->btnNum7->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum7->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum7->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -260,6 +276,7 @@ namespace Calculator {
 			// 
 			this->btnResult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(231)), static_cast<System::Int32>(static_cast<System::Byte>(206)),
 				static_cast<System::Int32>(static_cast<System::Byte>(253)));
+			this->btnResult->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnResult->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnResult->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -275,6 +292,7 @@ namespace Calculator {
 			// 
 			this->btnMin->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnMin->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnMin->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnMin->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -290,6 +308,7 @@ namespace Calculator {
 			// 
 			this->btnSignChange->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnSignChange->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnSignChange->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnSignChange->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -305,6 +324,7 @@ namespace Calculator {
 			// 
 			this->btnNum3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum3->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum3->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -320,6 +340,7 @@ namespace Calculator {
 			// 
 			this->btnNum6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum6->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum6->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -335,6 +356,7 @@ namespace Calculator {
 			// 
 			this->btnNum9->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum9->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum9->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum9->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -350,6 +372,7 @@ namespace Calculator {
 			// 
 			this->btnNum0->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnNum0->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnNum0->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnNum0->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -365,6 +388,7 @@ namespace Calculator {
 			// 
 			this->btnAdd->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnAdd->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnAdd->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnAdd->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -380,6 +404,7 @@ namespace Calculator {
 			// 
 			this->btnDiv->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnDiv->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnDiv->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnDiv->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -395,6 +420,7 @@ namespace Calculator {
 			// 
 			this->btnMult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnMult->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnMult->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnMult->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -410,6 +436,7 @@ namespace Calculator {
 			// 
 			this->btn2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btn2->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btn2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btn2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -425,6 +452,7 @@ namespace Calculator {
 			// 
 			this->btnSqrtRoot->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(209)), static_cast<System::Int32>(static_cast<System::Byte>(172)),
 				static_cast<System::Int32>(static_cast<System::Byte>(251)));
+			this->btnSqrtRoot->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->btnSqrtRoot->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnSqrtRoot->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -438,48 +466,63 @@ namespace Calculator {
 			// 
 			// labArg1
 			// 
-			this->labArg1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->labArg1->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labArg1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->labArg1->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labArg1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->labArg1->Location = System::Drawing::Point(32, 62);
+			this->labArg1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
+			this->labArg1->Location = System::Drawing::Point(32, 80);
 			this->labArg1->Name = L"labArg1";
-			this->labArg1->Size = System::Drawing::Size(133, 30);
+			this->labArg1->Size = System::Drawing::Size(133, 21);
 			this->labArg1->TabIndex = 26;
 			this->labArg1->Text = L"0";
 			this->labArg1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// labArg2
 			// 
-			this->labArg2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->labArg2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labArg2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->labArg2->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labArg2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->labArg2->Location = System::Drawing::Point(174, 62);
+			this->labArg2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
+			this->labArg2->Location = System::Drawing::Point(174, 80);
 			this->labArg2->Name = L"labArg2";
-			this->labArg2->Size = System::Drawing::Size(132, 30);
+			this->labArg2->Size = System::Drawing::Size(132, 21);
 			this->labArg2->TabIndex = 27;
 			this->labArg2->Text = L"0";
 			this->labArg2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// labArgResult
 			// 
-			this->labArgResult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->labArgResult->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labArgResult->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->labArgResult->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->labArgResult->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->labArgResult->Location = System::Drawing::Point(33, 99);
+			this->labArgResult->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
+			this->labArgResult->Location = System::Drawing::Point(33, 110);
 			this->labArgResult->Name = L"labArgResult";
-			this->labArgResult->Size = System::Drawing::Size(273, 30);
+			this->labArgResult->Size = System::Drawing::Size(273, 21);
 			this->labArgResult->TabIndex = 28;
 			this->labArgResult->Text = L"0";
 			this->labArgResult->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			// 
+			// labOperationInfo
+			// 
+			this->labOperationInfo->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)),
+				static_cast<System::Int32>(static_cast<System::Byte>(119)), static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->labOperationInfo->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labOperationInfo->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(64)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
+			this->labOperationInfo->Location = System::Drawing::Point(32, 50);
+			this->labOperationInfo->Name = L"labOperationInfo";
+			this->labOperationInfo->Size = System::Drawing::Size(273, 21);
+			this->labOperationInfo->TabIndex = 29;
+			this->labOperationInfo->Text = L"0";
+			this->labOperationInfo->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			// 
 			// MyForm
 			// 
@@ -488,6 +531,7 @@ namespace Calculator {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
 				static_cast<System::Int32>(static_cast<System::Byte>(244)));
 			this->ClientSize = System::Drawing::Size(337, 507);
+			this->Controls->Add(this->labOperationInfo);
 			this->Controls->Add(this->labArgResult);
 			this->Controls->Add(this->labArg2);
 			this->Controls->Add(this->labArg1);
@@ -512,7 +556,7 @@ namespace Calculator {
 			this->Controls->Add(this->btnNum5);
 			this->Controls->Add(this->btnClear);
 			this->Controls->Add(this->labOutput);
-			this->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->Cursor = System::Windows::Forms::Cursors::Default;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::Fixed3D;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximumSize = System::Drawing::Size(357, 550);
@@ -546,9 +590,12 @@ namespace Calculator {
 			case Calculator::START:
 				argument1 = System::Convert::ToDouble(this->labOutput->Text);
 				argument2 = 0.0;
+				strArgResult = System::Convert::ToString(argument1);
+				this->labOperationInfo->Text = strArgResult;
 				break;
 			case Calculator::WORK:
 				argument2 = System::Convert::ToDouble(this->labOutput->Text);
+				this->labOperationInfo->Text = strArgResult + System::Convert::ToString(argument2);
 				break;
 			case Calculator::END:
 				break;
@@ -669,6 +716,7 @@ namespace Calculator {
 				argumentResult = 0.0;
 				action = CLEAR;
 				status = START;
+				this->labOperationInfo->Text = System::Convert::ToString(argument1);
 				break;
 			case Calculator::SQUARE:
 				action = actionArg;
@@ -681,6 +729,7 @@ namespace Calculator {
 				argumentResult = 0.0;
 				action = CLEAR;
 				status = START;
+				this->labOperationInfo->Text = System::Convert::ToString(argument1);
 				break;
 			case Calculator::EQUALS:
 				Calculate();
@@ -688,6 +737,7 @@ namespace Calculator {
 				argument1 = argumentResult;
 				argument2 = 0.0;
 				argumentResult = 0.0;
+				this->labOperationInfo->Text = System::Convert::ToString(argument1);
 				break;
 			case Calculator::CLEAR:
 				break;
@@ -708,8 +758,35 @@ namespace Calculator {
 				default:
 					break;
 				}
+				strArgResult = System::Convert::ToString(argument1) + (getStringFromActionEnum(actionArg));
+				this->labOperationInfo->Text = strArgResult;
 				break;
 			}
+		}
+		private: String^ getStringFromActionEnum(ACTION act)
+		{
+			switch (act)
+			{
+			case Calculator::ADD:
+				return "+";
+			case Calculator::MINUS:
+				return "-";
+			case Calculator::MULTIPLY:
+				return "*";
+			case Calculator::DIVIDE:
+				return "/";
+			case Calculator::SQUARE_ROOT:
+				break;
+			case Calculator::SQUARE:
+				break;
+			case Calculator::EQUALS:
+				break;
+			case Calculator::CLEAR:
+				break;
+			default:
+				break;
+			}
+			
 		}
 		private: System::Void doSimpleAction(ACTION actionArg) {
 			UseStatus(actionArg);
