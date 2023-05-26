@@ -125,8 +125,8 @@ namespace Calculator {
 			// 
 			// labOutput
 			// 
-			this->labOutput->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->labOutput->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(185)), static_cast<System::Int32>(static_cast<System::Byte>(116)),
+				static_cast<System::Int32>(static_cast<System::Byte>(254)));
 			this->labOutput->Font = (gcnew System::Drawing::Font(L"Comic Sans MS", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->labOutput->Location = System::Drawing::Point(32, 9);
@@ -485,8 +485,8 @@ namespace Calculator {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(169)), static_cast<System::Int32>(static_cast<System::Byte>(119)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
 			this->ClientSize = System::Drawing::Size(337, 507);
 			this->Controls->Add(this->labArgResult);
 			this->Controls->Add(this->labArg2);
@@ -518,7 +518,7 @@ namespace Calculator {
 			this->MaximumSize = System::Drawing::Size(357, 550);
 			this->MinimumSize = System::Drawing::Size(357, 550);
 			this->Name = L"MyForm";
-			this->Opacity = 0.8;
+			this->Opacity = 0.95;
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Calculator";
 			this->TransparencyKey = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(128)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
